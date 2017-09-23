@@ -29,7 +29,7 @@ class OutputPrinter
         $problemsByFile = [];
 
         foreach ($outputFiles as $outputFile) {
-            $xml = simplexml_load_file($outputFile);
+            $xml = simplexml_load_string(file_get_contents($outputFile));
 
             $problemsXml = $xml->xpath('/problems/problem');
             foreach ($problemsXml as $problemXml) {

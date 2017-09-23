@@ -26,7 +26,7 @@ function realpathWithCheck($path)
 {
     $realpath = realpath($path);
     if ($realpath === false) {
-        throw new \Exception(sprintf('Path %s not found', $path));
+        throw new \RuntimeException(sprintf('Path %s not found', $path));
     }
 
     return $realpath;
@@ -72,7 +72,11 @@ try {
     $inspectShExecutableFilepath = realpathWithCheck($argv[1]);
     $phpstormSystemPath = realpathWithCheck($argv[2]);
     $projectPath = realpathWithCheck($argv[3]);
-    $inspectionProfileFilepath = realpathWithCheck($argv[4]);
+    if ($argv[4] === $argv[3] . '/.idea/inspectionProfiles/Project_Default.xml') {
+        $inspectionProfileFilepath = $projectPath . '/.idea/inspectionProfiles/Project_Default.xml';
+    } else {
+        $inspectionProfileFilepath = realpathWithCheck($argv[4]);
+    }
     $inspectedDirectory = realpathWithCheck($argv[5]);
     $outputPath = realpathWithCheck(__DIR__ . '/../output');
     $format = isset($argv[6]) ? $argv[6] : FORMAT_TEXT;

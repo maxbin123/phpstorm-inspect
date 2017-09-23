@@ -42,6 +42,7 @@ class InspectionRunner
      * @param string $inspectionProfileFilepath
      * @param string $outputPath
      * @param string $inspectedDirectory
+     * @throws \RuntimeException
      */
     public function runInspection(
         $inspectShExecutableFilepath,
@@ -50,7 +51,9 @@ class InspectionRunner
         $outputPath,
         $inspectedDirectory
     ) {
-        $command = sprintf(
+        (new ProjectCreator($projectPath))->repairProjectIfNeeded();
+
+        $command = \sprintf(
             '%s %s %s %s -d %s 2>&1',
             escapeshellarg($inspectShExecutableFilepath),
             escapeshellarg($projectPath),
@@ -70,7 +73,7 @@ class InspectionRunner
         }
 
         if ($returnCode !== 0) {
-            throw new \Exception($output);
+            throw new \RuntimeException($output);
         }
     }
 

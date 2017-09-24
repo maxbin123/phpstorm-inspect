@@ -28,7 +28,7 @@ class ProjectCreator {
         if (!\file_exists($modulesFile)) {
             $modulesStub       = $this->resourcesDirectory . '/modules.xml';
             $defaultModuleStub = $this->resourcesDirectory . '/default.iml';
-            $defaultModuleFile = $this->projectDirectory . '/.idea/default.xml';
+            $defaultModuleFile = $this->projectDirectory . '/.idea/default.iml';
 
             $copied = \copy($defaultModuleStub, $defaultModuleFile) && \copy($modulesStub, $modulesFile);
             $exists = \file_exists($defaultModuleFile) && \file_exists($modulesFile);
